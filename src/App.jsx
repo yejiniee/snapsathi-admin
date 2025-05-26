@@ -1,8 +1,13 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ReservationPage } from "./features/reservations";
+
 function App() {
   return (
-    <>
-      <div className="bg-orange-300">어드민페이지입니다</div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/reservation" element={<ReservationPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
