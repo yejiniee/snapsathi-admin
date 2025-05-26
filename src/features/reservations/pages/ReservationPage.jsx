@@ -1,8 +1,13 @@
+import { useState } from "react";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
+import TabMenu from "../../../components/Tab/TabMenu";
 import ReservationContent from "../components/ReservationContent";
+import { TABS } from "../constants/tab";
 
 export default function ReservationPage() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
@@ -11,9 +16,16 @@ export default function ReservationPage() {
         <Header title="예약 관리" />
         <main className="flex flex-col gap-5 px-10 pt-5">
           <h1 className="text-[2rem] font-semibold text-black">예약 관리</h1>
-          {/* // TODO: 탭 컴포넌트 */}
-          <nav>탭 목록(전체/확약/미확약)</nav>
-          <ReservationContent />
+          <TabMenu
+            tabs={TABS}
+            selectedIndex={selectedIndex}
+            onSelect={setSelectedIndex}
+          />
+
+          <ReservationContent
+            selectedTabTitle={TABS[selectedIndex].title}
+            selectedTabLabel={TABS[selectedIndex].label}
+          />
         </main>
       </div>
     </div>
