@@ -196,6 +196,7 @@ export default function ReservationForm({ reservation, isEdit, onChange }) {
             생성일: {new Date(reservation.created_at).toLocaleString()}
           </div>
         )}
+        {/* //TODO: 관리자 로그인 기능 구현 후 */}
         {reservation.modified_at && reservation.modified_by && (
           <div className="text-sm text-gray-500">
             최근 수정일: {new Date(reservation.modified_at).toLocaleString()} by
