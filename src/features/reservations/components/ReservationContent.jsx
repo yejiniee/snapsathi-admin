@@ -1,6 +1,8 @@
+import supabase from "@/supabase";
+import SearchBar from "@components/SearchBar";
 import { useEffect, useState } from "react";
-import supabase from "../../../supabase";
 import ReservationList from "./ReservationList";
+import ReservationModal from "./ReservationModal";
 
 const titleItems = {
   name: "예약자명",
@@ -10,7 +12,6 @@ const titleItems = {
   whatsapp: "번호", // TODO: 나중에 whatsapp이 아니라 phone_number로 바꿀 것
   status: "예약 상태",
   created_at: "생성일(한국 기준)",
-  seemore: "더보기/수정",
 };
 
 export default function ReservationContent({
@@ -53,16 +54,17 @@ export default function ReservationContent({
     >
       <div className="flex flex-col gap-5">
         <header className="text-lg font-medium">{selectedTabTitle}</header>
-        {/* //TODO: 서치컴포넌트 들어갈 예정 */}
-        <div role="search">검색바</div>
-        <div className="flex w-full items-center gap-2 text-base font-medium text-gray-400">
-          {Object.entries(titleItems).map(([key, title]) => (
-            <div key={key} className="shrink-0 grow basis-0">
-              {title}
-            </div>
-          ))}
+        <SearchBar />
+        <div className="flex flex-col">
+          <div className="flex w-full items-center gap-2 text-base font-medium text-gray-400">
+            {Object.entries(titleItems).map(([key, title]) => (
+              <div key={key} className="shrink-0 grow basis-0">
+                {title}
+              </div>
+            ))}
+          </div>
+          <ReservationList reservationData={reservationData} />
         </div>
-        <ReservationList reservationData={reservationData} />
       </div>
 
       <footer className="flex w-full items-center justify-between">
@@ -71,6 +73,8 @@ export default function ReservationContent({
         </div>
         <nav>페이지네이션 컴포넌트</nav>
       </footer>
+
+      <ReservationModal />
     </section>
   );
 }
