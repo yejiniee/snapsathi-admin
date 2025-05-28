@@ -2,6 +2,7 @@ import Backdrop from "@components/Backdrop";
 import Button from "@components/Button";
 import ModalPortal from "@components/ModalPortal";
 import MoreActionsDropdown from "@components/MoreActionsDropdown";
+import useUpdateReservation from "@features/reservations/hooks/useUpdateReservation";
 import useModalStore from "@stores/useModalStore";
 import { useEffect, useState } from "react";
 import ReservationForm from "./ReservationForm";
@@ -24,8 +25,15 @@ export default function ReservationModal() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const updateMutation = useUpdateReservation({ closeModal, setIsEdit });
+
   const handleFormSubmit = () => {
-    //TODO: 수정 폼 제출 함수 작성 예정
+    const { id, created_at, ...rest } = formData;
+    const newFormData = {
+      ...rest,
+      modified_at: new Date().toISOString(),
+    };
+    updateMutation.mutate({ id, newFormData });
   };
 
   if (!isOpen || !reservation || type !== "reservation") return null;
