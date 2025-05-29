@@ -2,6 +2,7 @@ import Backdrop from "@components/Backdrop";
 import Button from "@components/Button";
 import ModalPortal from "@components/ModalPortal";
 import MoreActionsDropdown from "@components/MoreActionsDropdown";
+import useDeleteReservation from "@features/reservations/hooks/useDeleteReservation";
 import useUpdateReservation from "@features/reservations/hooks/useUpdateReservation";
 import useModalStore from "@stores/useModalStore";
 import { useEffect, useState } from "react";
@@ -36,6 +37,16 @@ export default function ReservationModal() {
     updateMutation.mutate({ id, newFormData });
   };
 
+  const deleteMutation = useDeleteReservation({
+    closeModal,
+  });
+
+  const handleReservationDelete = () => {
+    if (confirm("정말 삭제하시겠어요? 삭제된 예약은 복구할 수 없습니다.")) {
+      deleteMutation.mutate(reservation.id);
+    }
+  };
+
   if (!isOpen || !reservation || type !== "reservation") return null;
 
   return (
@@ -47,7 +58,10 @@ export default function ReservationModal() {
             <main className="flex w-full flex-col gap-6">
               <header className="flex flex-row items-center justify-between text-xl font-medium text-black">
                 <span>예약 정보</span>
-                <MoreActionsDropdown onEdit={() => setIsEdit(true)} />
+                <MoreActionsDropdown
+                  onEdit={() => setIsEdit(true)}
+                  onDelete={handleReservationDelete}
+                />
               </header>
 
               <ReservationForm
