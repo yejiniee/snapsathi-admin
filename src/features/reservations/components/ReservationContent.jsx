@@ -1,6 +1,5 @@
-import supabase from "@/supabase";
 import SearchBar from "@components/SearchBar";
-import { useEffect, useState } from "react";
+import useGetReservations from "../hooks/useGetReservations";
 import ReservationList from "./ReservationList";
 import ReservationModal from "./ReservationModal";
 
@@ -18,32 +17,20 @@ export default function ReservationContent({
   selectedTabTitle,
   selectedTabLabel,
 }) {
-  const [reservationData, setReservationData] = useState([]);
+  const {
+    data: reservationData = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetReservations(selectedTabLabel);
 
-  useEffect(() => {
-    async function fetchReservations() {
-      let query = supabase
-        .from("reservations")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (selectedTabLabel === "confirmed") {
-        query = query.eq("status", "confirmed");
-      } else if (selectedTabLabel === "unconfirmed") {
-        query = query.eq("status", "unconfirmed");
-      }
-
-      const { data, error } = await query;
-
-      if (error) {
-        alert("불러오기 실패: " + error.message);
-      } else {
-        setReservationData(data);
-      }
-    }
-
-    fetchReservations();
-  }, [selectedTabLabel]);
+  if (isError) {
+    return (
+      <div role="alert">
+        예약 목록을 불러오는 데 실패했습니다: {error.message}
+      </div>
+    );
+  }
 
   return (
     <section
@@ -63,7 +50,11 @@ export default function ReservationContent({
               </div>
             ))}
           </div>
-          <ReservationList reservationData={reservationData} />
+          {isLoading ? (
+            <div className="py-8 text-center">예약 목록을 불러오는 중…</div>
+          ) : (
+            <ReservationList reservationData={reservationData} />
+          )}
         </div>
       </div>
 
