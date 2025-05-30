@@ -1,12 +1,4 @@
-import { useState } from "react";
-
-export default function SearchBar() {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
+export default function SearchBar({ inputValue, onChange }) {
   return (
     <>
       <div role="search" className="flex items-center">
@@ -16,7 +8,7 @@ export default function SearchBar() {
             type="text"
             placeholder="검색어를 입력해주세요"
             value={inputValue}
-            onChange={handleInputChange}
+            onChange={onChange}
           />
           <img
             className="absolute left-3 top-1/2 -translate-y-1/2 transform"
