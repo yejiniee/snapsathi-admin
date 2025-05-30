@@ -28,7 +28,7 @@ export default function ReservationContent({
   const {
     searchKeyword,
     handleSearchInputChange,
-    filteredData: filteredReservations,
+    filteredData: filteredReservationData,
   } = useSearchFilter(reservationData);
 
   if (isError) {
@@ -63,14 +63,14 @@ export default function ReservationContent({
           {isLoading ? (
             <div className="py-8 text-center">예약 목록을 불러오는 중…</div>
           ) : (
-            <ReservationList reservationData={filteredReservations} />
+            <ReservationList reservationData={filteredReservationData} />
           )}
         </div>
       </div>
 
       <footer className="flex w-full items-center justify-between">
         <div className="text-base font-normal text-[#4763E4]">
-          총 예약: {reservationData.length ?? 0}건
+          총 예약 {filteredReservationData.length ?? 0}건
         </div>
         <nav>페이지네이션 컴포넌트</nav>
       </footer>
