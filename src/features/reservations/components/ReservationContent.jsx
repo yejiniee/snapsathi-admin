@@ -1,4 +1,5 @@
 import SearchBar from "@components/SearchBar";
+import useSearchFilter from "@hooks/useSearchFilter";
 import useGetReservations from "../hooks/useGetReservations";
 import ReservationList from "./ReservationList";
 import ReservationModal from "./ReservationModal";
@@ -24,6 +25,12 @@ export default function ReservationContent({
     error,
   } = useGetReservations(selectedTabLabel);
 
+  const {
+    searchKeyword,
+    handleSearchInputChange,
+    filteredData: filteredReservations,
+  } = useSearchFilter(reservationData);
+
   if (isError) {
     return (
       <div role="alert">
@@ -41,7 +48,10 @@ export default function ReservationContent({
     >
       <div className="flex flex-col gap-5">
         <header className="text-lg font-medium">{selectedTabTitle}</header>
-        <SearchBar />
+        <SearchBar
+          inputValue={searchKeyword}
+          onChange={handleSearchInputChange}
+        />
         <div className="flex flex-col">
           <div className="flex w-full items-center gap-2 text-base font-medium text-gray-400">
             {Object.entries(titleItems).map(([key, title]) => (
@@ -53,7 +63,7 @@ export default function ReservationContent({
           {isLoading ? (
             <div className="py-8 text-center">예약 목록을 불러오는 중…</div>
           ) : (
-            <ReservationList reservationData={reservationData} />
+            <ReservationList reservationData={filteredReservations} />
           )}
         </div>
       </div>
