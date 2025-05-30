@@ -2,10 +2,13 @@ import { useState } from "react";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import TabMenu from "../../../components/Tab/TabMenu";
+import useRedirectIfUnauthenticated from "../../../hooks/useRedirectIfUnauthenticated";
 import ReservationContent from "../components/ReservationContent";
 import { TABS } from "../constants/tabs";
 
 export default function ReservationPage() {
+  useRedirectIfUnauthenticated();
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
