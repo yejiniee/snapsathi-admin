@@ -4,7 +4,7 @@ import Sidebar from "../../../components/Sidebar";
 import TabMenu from "../../../components/Tab/TabMenu";
 import useRedirectIfUnauthenticated from "../../../hooks/useRedirectIfUnauthenticated";
 import ReservationContent from "../components/ReservationContent";
-import { TABS } from "../constants/tabs";
+import { TABS } from "../constants/reservation";
 
 export default function ReservationPage() {
   useRedirectIfUnauthenticated();

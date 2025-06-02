@@ -1,5 +1,9 @@
+import Pagination from "@components/Pagination";
 import SearchBar from "@components/SearchBar";
+import usePagination from "@hooks/usePagination";
 import useSearchFilter from "@hooks/useSearchFilter";
+import { useState } from "react";
+import { PAGE_LIMIT } from "../constants/reservation";
 import useGetReservations from "../hooks/useGetReservations";
 import ReservationList from "./ReservationList";
 import ReservationModal from "./ReservationModal";
@@ -18,12 +22,32 @@ export default function ReservationContent({
   selectedTabTitle,
   selectedTabLabel,
 }) {
+  const [page, setPage] = useState(1);
+
   const {
-    data: reservationData = [],
+    data: { data: reservationData = [], count = 0 } = {},
     isLoading,
     isError,
     error,
-  } = useGetReservations(selectedTabLabel);
+  } = useGetReservations({
+    status: selectedTabLabel,
+    page,
+    limit: PAGE_LIMIT,
+  });
+
+  const {
+    totalPages,
+    pageNumbers,
+    groupStart,
+    groupEnd,
+    goToPrevGroup,
+    goToNextGroup,
+  } = usePagination({
+    totalCount: count,
+    pageLimit: PAGE_LIMIT,
+    currentPage: page,
+    setCurrentPage: setPage,
+  });
 
   const {
     searchKeyword,
@@ -44,7 +68,7 @@ export default function ReservationContent({
       role="tabpanel"
       id={`tabpanel-${selectedTabLabel}`}
       aria-labelledby={`tab-${selectedTabLabel}`}
-      className="flex h-[43rem] w-full flex-col justify-between rounded-xl bg-white p-8 text-black"
+      className="flex min-h-[43rem] w-full flex-col justify-between rounded-xl bg-white p-8 text-black"
     >
       <div className="flex flex-col gap-5">
         <header className="text-lg font-medium">{selectedTabTitle}</header>
@@ -69,10 +93,20 @@ export default function ReservationContent({
       </div>
 
       <footer className="flex w-full items-center justify-between">
-        <div className="text-base font-normal text-[#4763E4]">
-          총 예약 {filteredReservationData.length ?? 0}건
+        <div className="text-base font-normal text-[#415ac7]">
+          총 예약 {count}건
         </div>
-        <nav>페이지네이션 컴포넌트</nav>
+        {/* //TODO: 예약 수정하고 탭 이동 시 에러 발생  */}
+        <Pagination
+          totalPages={totalPages}
+          pageNumbers={pageNumbers}
+          groupStart={groupStart}
+          groupEnd={groupEnd}
+          goToPrevGroup={goToPrevGroup}
+          goToNextGroup={goToNextGroup}
+          page={page}
+          setPage={setPage}
+        />
       </footer>
 
       <ReservationModal />
