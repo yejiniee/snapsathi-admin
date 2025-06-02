@@ -1,4 +1,14 @@
+import { useSignOut } from "../features/auth/hooks/useSignOut";
 export default function Header() {
+  const { mutate: signOut } = useSignOut();
+
+  const handleSignOutClick = (e) => {
+    e.preventDefault();
+    if (confirm("정말 로그아웃하시겠습니까?")) {
+      signOut();
+    }
+  };
+
   return (
     <header className="flex h-20 w-full shrink-0 items-center justify-between bg-white px-10 py-7">
       <nav aria-label="현재 위치" className="flex flex-row items-center gap-2">
@@ -6,8 +16,9 @@ export default function Header() {
         <span>&gt;</span>
         <span>예약 목록</span>
       </nav>
-      {/* //TODO: 사용자 아이콘으로 대체 */}
-      <div>사용자</div>
+      <button type="button" onClick={handleSignOutClick}>
+        로그아웃
+      </button>
     </header>
   );
 }
