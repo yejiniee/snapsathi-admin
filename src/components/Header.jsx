@@ -10,7 +10,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex h-20 w-full shrink-0 items-center justify-between bg-white px-10 py-7">
+    <header className="flex h-16 w-full shrink-0 items-center justify-between bg-white px-10">
       <nav aria-label="현재 위치" className="flex flex-row items-center gap-2">
         <span>SNAPSATHI</span>
         <span>&gt;</span>

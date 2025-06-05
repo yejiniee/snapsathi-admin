@@ -4,4 +4,4 @@ export const TABS = [
   { label: "unconfirmed", title: "미확정된 예약" },
 ];
 
-export const PAGE_LIMIT = 6;
+export const PAGE_LIMIT = 10;
