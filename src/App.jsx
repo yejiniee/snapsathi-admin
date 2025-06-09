@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignInPage from "./features/auth/pages/SignInPage";
 import { ReservationPage } from "./features/reservations";
+import ReservationInquiryDetailPage from "./features/reservations/pages/ReservationInquiryDetailPage";
 import ReservationInquiryPage from "./features/reservations/pages/ReservationInquiryPage";
 
 function App() {
@@ -11,6 +12,10 @@ function App() {
         <Route
           path="/reservation-inquiry"
           element={<ReservationInquiryPage />}
+        />
+        <Route
+          path="/reservation-inquiry/:id"
+          element={<ReservationInquiryDetailPage />}
         />
         <Route path="/signin" element={<SignInPage />} />
       </Routes>
