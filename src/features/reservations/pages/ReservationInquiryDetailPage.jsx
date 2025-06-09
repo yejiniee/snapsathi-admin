@@ -1,14 +1,17 @@
 import Button from "@components/Button";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReservationForm from "../components/ReservationForm";
 import useGetInquiryById from "../hooks/useGetInquiryById";
 import useGetReservationByNumber from "../hooks/useGetReservationByNumber";
+import useUpdateInquiryStatus from "../hooks/useUpdateInquiryStatus";
 import useUpdateReservation from "../hooks/useUpdateReservation";
 
 //TODO: 리팩토링 필요
 export default function ReservationInquiryDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [isEdit, setIsEdit] = useState(false);
   const [formData, setFormData] = useState({});
   const [reservationNumber, setReservationNumber] = useState(null);
@@ -37,6 +40,24 @@ export default function ReservationInquiryDetailPage() {
     closeModal: () => setIsEdit(false),
     setIsEdit,
   });
+
+  const updateInquiryStatus = useUpdateInquiryStatus();
+  const handleConfirmInquiryClick = () => {
+    if (!inquiry?.id) return;
+    if (
+      confirm("정말 문의를 종료하시겠어요?\n종료된 문의는 다시 열 수 없습니다.")
+    ) {
+      updateInquiryStatus.mutate(
+        { id: inquiry.id, status: "completed" },
+        {
+          onSuccess: () => {
+            alert("문의가 종료되었습니다.");
+            navigate("/reservation-inquiry");
+          },
+        },
+      );
+    }
+  };
 
   useEffect(() => {
     if (reservation) setFormData(reservation);
@@ -95,6 +116,13 @@ export default function ReservationInquiryDetailPage() {
         ) : (
           <>
             <Button onClick={() => setIsEdit(true)}>예약 수정하기</Button>
+            <Button
+              variant="outlined"
+              onClick={handleConfirmInquiryClick}
+              disabled={updateInquiryStatus.isLoading}
+            >
+              문의 종료하기
+            </Button>
           </>
         )}
       </div>
