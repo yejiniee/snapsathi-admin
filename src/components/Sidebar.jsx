@@ -10,7 +10,10 @@ export default function Sidebar() {
           <img src="./src/assets/logo.png"></img>
         </header>
         <nav className="flex flex-col items-start justify-center gap-6 p-5 text-white">
-          <button onClick={() => navigate("/reservation")}>예약관리</button>
+          <button onClick={() => navigate("/reservation")}>예약 목록</button>
+          <button onClick={() => navigate("/reservation-inquiry")}>
+            고객 문의
+          </button>
         </nav>
       </aside>
     </div>
