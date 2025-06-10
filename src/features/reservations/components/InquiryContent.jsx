@@ -9,7 +9,9 @@ import useGetInquiries from "../hooks/useGetInquiries";
 
 const titleItems = {
   id: "예약번호",
-  created_at: "생성일(한국 기준)",
+  // name: "이름",
+  message: "문의내용",
+  created_at: "작성일(한국 기준)",
 };
 
 export default function InquiryContent() {
