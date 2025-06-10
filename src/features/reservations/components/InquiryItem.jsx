@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function InquiryItem({ inquiry }) {
   const navigate = useNavigate();
-
   return (
     <div
       onClick={() => navigate(`/reservation-inquiry/${inquiry.id}`)}
@@ -10,12 +9,16 @@ export default function InquiryItem({ inquiry }) {
     >
       <div className="flex flex-col items-center gap-3 self-stretch pt-3">
         <div className="flex w-full items-center gap-2 text-sm font-normal text-gray-800">
-          {/* 예약 번호 */}
           <div className="flex shrink-0 grow basis-0 items-center self-stretch">
             {inquiry.reservation_number}
           </div>
-          {/* //TODO 메시지 컬럼 추가할듯 */}
-          {/* 폼 생성 시간 */}
+          {/* <div className="flex shrink-0 grow basis-0 items-center self-stretch">
+            {inquiry.name}
+          </div> */}
+          <div className="flex shrink-0 grow basis-0 items-center self-stretch">
+            {inquiry.message}
+          </div>
+
           <div className="flex shrink-0 grow basis-0 items-center self-stretch">
             {/* // TODO: 유틸 함수로 빼기 */}
             {new Date(inquiry.created_at).toLocaleString("ko-KR", {

@@ -11,7 +11,7 @@ import ReservationModal from "./ReservationModal";
 const titleItems = {
   name: "예약자명",
   event_date: "이벤트 날짜",
-  service_time: "서비스 시간",
+  service_hours: "서비스 시간",
   location: "서비스 장소",
   whatsapp: "번호", // TODO: 나중에 whatsapp이 아니라 phone_number로 바꿀 것
   status: "예약 상태",
