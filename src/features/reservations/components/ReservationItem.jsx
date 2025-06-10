@@ -20,7 +20,7 @@ export default function ReservationItem({ reservation }) {
           </div>
           {/* 서비스 시간 */}
           <div className="flex shrink-0 grow basis-0 items-center self-stretch">
-            {reservation.service_time}
+            {reservation.service_hours}
           </div>
           {/* 서비스 장소 */}
           <div className="flex shrink-0 grow basis-0 items-center self-stretch">

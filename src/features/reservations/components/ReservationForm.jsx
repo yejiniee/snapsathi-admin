@@ -7,11 +7,11 @@ export default function ReservationForm({ reservation, isEdit, onChange }) {
   return (
     <div>
       <div className="grid grid-cols-2 gap-6">
-        <FormField label="예약번호" htmlFor="reservation-id">
+        <FormField label="예약번호" htmlFor="reservation-number">
           <Input
-            id="reservation-id"
-            name="id"
-            value={reservation.id ?? 0}
+            id="reservation-number"
+            name="reservation_number"
+            value={reservation.reservation_number ?? 0}
             disabled
             readOnly
           />
@@ -65,12 +65,12 @@ export default function ReservationForm({ reservation, isEdit, onChange }) {
             disabled={!isEdit}
           />
         </FormField>
-        <FormField label="서비스 시간" htmlFor="reservation-service-time">
+        <FormField label="서비스 시간" htmlFor="reservation-service-hours">
           <Input
-            id="reservation-service-time"
-            name="service_time"
-            value={reservation.service_time ?? ""}
-            onChange={(e) => onChange("service_time", e.target.value)}
+            id="reservation-service-hours"
+            name="service_hours"
+            value={reservation.service_hours ?? ""}
+            onChange={(e) => onChange("service_hours", e.target.value)}
             disabled={!isEdit}
           />
         </FormField>
@@ -185,6 +185,41 @@ export default function ReservationForm({ reservation, isEdit, onChange }) {
             name="deposit_name"
             value={reservation.deposit_name ?? ""}
             onChange={(e) => onChange("deposit_name", e.target.value)}
+            disabled={!isEdit}
+          />
+        </FormField>
+        <FormField label="할인코드" htmlFor="reservation-discount-code">
+          <Input
+            id="reservation-discount-code"
+            name="discount_code"
+            value={reservation.discount_code ?? ""}
+            disabled={!isEdit}
+          />
+        </FormField>
+        <FormField
+          label="적용된 할인금액"
+          htmlFor="reservation-applied-discount"
+        >
+          <Input
+            id="reservation-applied-discount"
+            name="applied_discount"
+            value={reservation.applied_discount ?? ""}
+            disabled={!isEdit}
+          />
+        </FormField>
+        <FormField label="예약금" htmlFor="reservation-deposit-amount">
+          <Input
+            id="reservation-deposit-amount"
+            name="deposit_amount"
+            value={reservation.deposit_amount ?? ""}
+            disabled={!isEdit}
+          />
+        </FormField>
+        <FormField label="총금액" htmlFor="reservation-total-amount">
+          <Input
+            id="reservation-total-amount"
+            name="total_amount"
+            value={reservation.total_amount ?? ""}
             disabled={!isEdit}
           />
         </FormField>
