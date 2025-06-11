@@ -3,6 +3,7 @@ name: Run Supabase Cleanup Functions
 on:
   schedule:
     - cron: "0 0 * * *" # 매일 자정 UTC 시간에 실행
+  workflow_dispatch:
 
 jobs:
   update-status:
