@@ -1,0 +1,39 @@
+name: Run Supabase Cleanup Functions
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 매일 자정 UTC 시간에 실행
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_FUNCTION_URL: ${{ secrets.SUPABASE_FUNCTION_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Update reservation status to completed for past event dates
+        run: |
+          curl -X POST $SUPABASE_FUNCTION_URL/update_completed_reservations \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+
+  delete-old-reservations:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_FUNCTION_URL: ${{ secrets.SUPABASE_FUNCTION_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Delete completed reservations older than 30 days
+        run: |
+          curl -X POST $SUPABASE_FUNCTION_URL/delete_old_reservations \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+
+  delete-old-inquiries:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_FUNCTION_URL: ${{ secrets.SUPABASE_FUNCTION_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Delete completed inquiries older than 30 days
+        run: |
+          curl -X POST $SUPABASE_FUNCTION_URL/delete_old_inquiries \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
