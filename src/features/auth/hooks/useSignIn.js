@@ -1,13 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../../stores/useUserStore";
 import { signIn } from "../api/auth";
 
 export const useSignIn = () => {
   const navigate = useNavigate();
+  const { setUser } = useUserStore();
 
   return useMutation({
     mutationFn: signIn,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setUser(data.user);
       navigate("/reservation", { replace: true });
     },
     onError: (error) => {
