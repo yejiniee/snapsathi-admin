@@ -226,16 +226,17 @@ export default function ReservationForm({ reservation, isEdit, onChange }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        {reservation.created_at && (
+        {reservation?.created_at && (
           <div className="mt-4 text-sm text-gray-500">
-            생성일: {new Date(reservation.created_at).toLocaleString()}
+            <span className="font-semibold">생성일:</span>{" "}
+            {new Date(reservation.created_at).toLocaleString()}
           </div>
         )}
-        {/* //TODO: 관리자 로그인 기능 구현 후 */}
-        {reservation.modified_at && reservation.modified_by && (
+        {reservation?.modified_at && reservation?.modified_by && (
           <div className="text-sm text-gray-500">
-            최근 수정일: {new Date(reservation.modified_at).toLocaleString()} by
-            {reservation.modified_by}
+            <span className="font-semibold">최근 수정일: </span>
+            {new Date(reservation.modified_at).toLocaleString()}{" "}
+            <span className="font-semibold">by</span> {reservation.modified_by}
           </div>
         )}
       </div>

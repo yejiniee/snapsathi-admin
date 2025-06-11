@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../stores/useUserStore";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const { user } = useUserStore();
 
   return (
     <div>
@@ -15,6 +17,16 @@ export default function Sidebar() {
             고객 문의
           </button>
         </nav>
+
+        {/* 로그인 유저 정보 표시 */}
+        {/* //TODO 추후 위치 조정 */}
+        <div className="p-4 text-sm text-gray-300">
+          {user ? (
+            <div>👤 {user.user_metadata?.name || user.email}</div>
+          ) : (
+            <div>로그인되지 않음</div>
+          )}
+        </div>
       </aside>
     </div>
   );
