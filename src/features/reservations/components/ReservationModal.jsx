@@ -5,11 +5,13 @@ import MoreActionsDropdown from "@components/MoreActionsDropdown";
 import useDeleteReservation from "@features/reservations/hooks/useDeleteReservation";
 import useUpdateReservation from "@features/reservations/hooks/useUpdateReservation";
 import useModalStore from "@stores/useModalStore";
+import useUserStore from "@stores/useUserStore";
 import { useEffect, useState } from "react";
 import ReservationForm from "./ReservationForm";
 
 export default function ReservationModal() {
   const { isOpen, data: reservation, type, closeModal } = useModalStore();
+  const { user } = useUserStore();
 
   const [isEdit, setIsEdit] = useState(false);
   const [formData, setFormData] = useState({});
@@ -33,6 +35,7 @@ export default function ReservationModal() {
     const newFormData = {
       ...rest,
       modified_at: new Date().toISOString(),
+      modified_by: user?.email || "unknown",
     };
     updateMutation.mutate({ id, newFormData });
   };
