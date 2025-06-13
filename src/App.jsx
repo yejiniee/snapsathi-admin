@@ -3,20 +3,23 @@ import SignInPage from "./features/auth/pages/SignInPage";
 import { ReservationPage } from "./features/reservations";
 import ReservationInquiryDetailPage from "./features/reservations/pages/ReservationInquiryDetailPage";
 import ReservationInquiryPage from "./features/reservations/pages/ReservationInquiryPage";
+import Layout from "./Layout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/reservation" element={<ReservationPage />} />
-        <Route
-          path="/reservation-inquiry"
-          element={<ReservationInquiryPage />}
-        />
-        <Route
-          path="/reservation-inquiry/:id"
-          element={<ReservationInquiryDetailPage />}
-        />
+        <Route element={<Layout />}>
+          <Route path="/reservation" element={<ReservationPage />} />
+          <Route
+            path="/reservation-inquiry"
+            element={<ReservationInquiryPage />}
+          />
+          <Route
+            path="/reservation-inquiry/:id"
+            element={<ReservationInquiryDetailPage />}
+          />
+        </Route>
         <Route path="/signin" element={<SignInPage />} />
       </Routes>
     </BrowserRouter>
