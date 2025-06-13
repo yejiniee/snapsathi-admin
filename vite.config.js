@@ -4,6 +4,9 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    historyApiFallback: true, // ✅ 개발 중 새로고침 404 방지
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
